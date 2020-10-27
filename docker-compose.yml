@@ -1,0 +1,32 @@
+version: "2.1"
+services:
+  localstack:
+    image: localstack/localstack
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=sqs
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  app:
+    build: .
+    volumes:
+      - .:/src
+      - nodemodules:/src/node_modules
+      - ~/.aws/:/root/.aws:ro
+    restart: on-failure
+    # command: npm test
+    ports:
+      - 3002:3002
+    links:
+      - localstack
+    depends_on:
+      - localstack
+    environment:
+      QUEUE_NAME: wonder
+      SQS_PORT: 4566
+      AWS_SDK_LOAD_CONFIG: "true"
+
+volumes:
+  nodemodules: {}

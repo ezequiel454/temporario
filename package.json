@@ -1,0 +1,29 @@
+{
+  "name": "wonderqserver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --exec BABEL_DISABLE_CACHE=1 babel-node src/index.js --inspect --host 0.0.0.0",
+    "create:queue": "npx aws --region us-east-1 --endpoint-url=http://localhost:4566 sqs create-queue --queue-name wonder",
+    "list:queue": "npx aws --region us-east-1 --endpoint-url=http://localhost:4566 sqs list-queues",
+    "receive": "npx aws --region us-east-1 --endpoint-url=http://localhost:4566"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/node": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "nodemon": "^2.0.6"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.777.0",
+    "body-parser": "1.19.0",
+    "cors": "2.8.5",
+    "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
+    "yup": "^0.29.3"
+  },
+  "author": "",
+  "license": "ISC"
+}
